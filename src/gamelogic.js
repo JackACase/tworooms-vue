@@ -27,4 +27,4 @@ function roundHostages(playerCount, currentRound) {
     return hostages[currentRound]
 }
 
-export { HOSTAGES_PER_ROUND, longGameAvailable, hostages, }
+export { longGameAvailable, roundHostages }
