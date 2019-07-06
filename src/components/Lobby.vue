@@ -19,7 +19,7 @@ export default {
     created() {
         let self = this
         setInterval(() => {
-            axios.get('http://localhost:8000/game?access_code=' + self.accessCode)
+            axios.get('http://localhost:8000/game?access_code=' + self.accessCode.toUpperCase())
                 .then((response) => {
                     self.players = response.data.players
                 }

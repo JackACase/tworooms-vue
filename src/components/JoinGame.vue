@@ -37,7 +37,7 @@ export default {
     joinGame () {
       let self = this
       axios
-        .post('http://localhost:8000/join/', { player_name: this.name, access_code: this.accessCode })
+        .post('http://localhost:8000/join/', { player_name: this.name, access_code: this.accessCode.toUpperCase() })
         .then((response) => {
           self.$router.push('/lobby/' + self.accessCode)
         })
