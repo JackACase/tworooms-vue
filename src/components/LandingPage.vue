@@ -13,7 +13,7 @@ export default {
       this.$router.push('/new/')
     },
     joinGame () {
-      this.$router.push('/join')
+      this.$router.push('/join/')
     }
   }
 }
