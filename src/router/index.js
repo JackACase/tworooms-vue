@@ -4,6 +4,7 @@ import LandingPage from '@/components/LandingPage'
 import NewGame from '@/components/NewGame'
 import JoinGame from '@/components/JoinGame'
 import Lobby from '@/components/Lobby'
+import Game from '@/components/Game'
 
 Vue.use(Router)
 
@@ -28,6 +29,12 @@ export default new Router({
       path: '/lobby/:accessCode',
       name: 'Lobby',
       component: Lobby,
+      props: true
+    },
+    {
+      path: '/game/:accessCode',
+      name: 'Game',
+      component: Game,
       props: true
     }
   ]
