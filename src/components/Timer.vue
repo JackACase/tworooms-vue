@@ -1,11 +1,11 @@
 <template>
-  <h1 v-if="startTime != 0">{{minutes}}:{{seconds}}</h1>
+  <h1>{{minutes}}:{{paddedSeconds}}</h1>
 </template>
 
 <script>
 import Timer from "easytimer.js";
 
-var started = false
+var started = false;
 
 export default {
   data() {
@@ -16,12 +16,19 @@ export default {
     };
   },
 
+  computed: {
+      paddedSeconds: function() {
+          console.log(this.seconds.length)
+          return this.seconds.toString().length > 1 ? this.seconds : "0" + this.seconds
+      }
+  },
+
   props: ["startTime", "duration"],
 
   methods: {},
 
-  beforeUpdate() {
-    if (!started) {
+  watch: {
+    startTime() {
       var self = this;
       var timer = new Timer();
       var now = Math.floor(Date.now() / 1000);
@@ -42,11 +49,10 @@ export default {
       );
       timer.start({ countdown: true, startValues: { seconds: initialTime } });
       timer.addEventListener("secondsUpdated", () => {
-        self.timeRemaining = timer.getTimeValues().toString()
-        self.minutes = timer.getTimeValues().minutes
-        self.seconds = timer.getTimeValues().seconds
+        self.timeRemaining = timer.getTimeValues().toString();
+        self.minutes = timer.getTimeValues().minutes;
+        self.seconds = timer.getTimeValues().seconds;
       });
-      started = true
     }
   }
 };
