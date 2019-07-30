@@ -1,5 +1,5 @@
 <template>
-  <h1 v-if="startTime != 0">{{timeRemaining}}</h1>
+  <h1 v-if="startTime != 0">{{minutes}}:{{seconds}}</h1>
 </template>
 
 <script>
@@ -10,7 +10,9 @@ var started = false
 export default {
   data() {
     return {
-      timeRemaining: ""
+      timeRemaining: "",
+      minutes: "0",
+      seconds: "00"
     };
   },
 
@@ -40,7 +42,9 @@ export default {
       );
       timer.start({ countdown: true, startValues: { seconds: initialTime } });
       timer.addEventListener("secondsUpdated", () => {
-        self.timeRemaining = timer.getTimeValues().toString();
+        self.timeRemaining = timer.getTimeValues().toString()
+        self.minutes = timer.getTimeValues().minutes
+        self.seconds = timer.getTimeValues().seconds
       });
       started = true
     }
