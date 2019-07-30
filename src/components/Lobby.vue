@@ -20,7 +20,7 @@ export default {
   props: ["accessCode"],
   methods: {
       startGame() {
-          axios.post('http://localhost:8000/start/', {access_code: this.accessCode})
+          axios.post('http://localhost:8000/start/', {access_code: this.accessCode, state: "pickingLeader"})
       }
   },
   created() {
@@ -36,13 +36,13 @@ export default {
         .then(response => {
           console.log(response.data);
           self.players = response.data.players;
-          if (response.data.state == "gameInProgress") {
+          if (response.data.state == "pickingLeader" || response.data.state == "roundStarted") {
             //game has started -> go to game component
             clearInterval(interval);
             this.$router.push("/game/" + self.accessCode);
           }
         });
-    }, 5000);
+    }, 500);
   }
 };
 </script>

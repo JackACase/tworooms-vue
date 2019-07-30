@@ -6,13 +6,14 @@
 import Timer from "easytimer.js";
 
 export default {
-  props: ["startTime", "duration"],
+  props: ["startTime", "duration", "running"],
 
   data() {
     return {
       timeRemaining: "",
       minutes: "0",
-      seconds: "00"
+      seconds: "00",
+      timer: null
     };
   },
 
@@ -27,18 +28,24 @@ export default {
   watch: {
     startTime() {
       var self = this;
-      var timer = new Timer();
+
+      // if timer is being restarted
+      if(this.timer) {
+        this.timer.removeEventListener("secondsUpdated")
+      }
+
+      this.timer = new Timer();
       var now = Math.floor(Date.now() / 1000);
 
       var endTime = this.startTime + this.duration * 60;
 
       var initialTime = endTime - now;
 
-      timer.start({ countdown: true, startValues: { seconds: initialTime } });
-      timer.addEventListener("secondsUpdated", () => {
-        self.timeRemaining = timer.getTimeValues().toString();
-        self.minutes = timer.getTimeValues().minutes;
-        self.seconds = timer.getTimeValues().seconds;
+      this.timer.start({ countdown: true, startValues: { seconds: initialTime } });
+      this.timer.addEventListener("secondsUpdated", () => {
+        self.timeRemaining = this.timer.getTimeValues().toString();
+        self.minutes = this.timer.getTimeValues().minutes;
+        self.seconds = this.timer.getTimeValues().seconds;
       });
     }
   }
