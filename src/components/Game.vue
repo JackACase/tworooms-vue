@@ -1,37 +1,46 @@
 <template>
-  <h1>it's a game</h1>
+  <div>
+    <Timer v-bind:start-time="startTime" 
+    v-bind:duration="remainingRounds + 1"></Timer>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
-import moment from "moment"
+
+import Timer from "./Timer.vue";
 // import longGameAvailable from "../gamelogic"
 export default {
   props: ["accessCode"],
 
+  components: {
+    Timer
+  },
+
   data() {
-      return {
-          endTime: 0,
-          currentRound: 1,
-          remainingRounds: 2
-      }
+    return {
+      startTime: 0,
+      currentRound: 1,
+      remainingRounds: 2
+    };
   },
 
   methods: {
-      setTimer(startTime) {
-          this.endTime = moment(startTime)
-          this.endTime.add(this.remainingRounds + 1, 'minutes')
-      }
+    // setTimer(startTime) {
+    //   this.startTime = 
+    // }
   },
 
   created() {
-    var self = this
-    axios.get(
-      "http://localhost:8000/game?access_code=" + self.accessCode.toUpperCase()
-    ).then(response => {
-        self.endTime = moment(response.data.start_time)
-        self.endTime.add(3, 'minutes')
-    })
+    var self = this;
+    axios
+      .get(
+        "http://localhost:8000/game?access_code=" +
+          self.accessCode.toUpperCase()
+      )
+      .then(response => {
+        self.startTime = response.data.start_time
+      });
   }
 };
 </script>
