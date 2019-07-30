@@ -4,8 +4,10 @@
       v-bind:start-time="startTime"
       v-bind:duration="remainingRounds + 1"
       v-bind:running="timerRunning"
+      v-on:time-up="message = 'Time up!'"
     ></Timer>
     <button @click="startRound" type="button" class="btn btn-primary">Ready!</button>
+    <h1>{{message}}</h1>
   </div>
 </template>
 
@@ -27,7 +29,8 @@ export default {
       startTime: 0,
       currentRound: 1,
       remainingRounds: 2,
-      timerRunning: false
+      timerRunning: false,
+      message: ""
     };
   },
 

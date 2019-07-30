@@ -32,6 +32,7 @@ export default {
       // if timer is being restarted
       if(this.timer) {
         this.timer.removeEventListener("secondsUpdated")
+        this.timer.removeEventListener("targetAchieved")
       }
 
       this.timer = new Timer();
@@ -47,6 +48,10 @@ export default {
         self.minutes = this.timer.getTimeValues().minutes;
         self.seconds = this.timer.getTimeValues().seconds;
       });
+      this.timer.addEventListener("targetAchieved", () => {
+        //emit an event
+        self.$emit("time-up")
+      })
     }
   }
 };
