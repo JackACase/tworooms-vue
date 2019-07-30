@@ -5,9 +5,9 @@
 <script>
 import Timer from "easytimer.js";
 
-var started = false;
-
 export default {
+  props: ["startTime", "duration"],
+
   data() {
     return {
       timeRemaining: "",
@@ -17,14 +17,12 @@ export default {
   },
 
   computed: {
-      paddedSeconds: function() {
-          return this.seconds.toString().length > 1 ? this.seconds : "0" + this.seconds
-      }
+    paddedSeconds: function() {
+      return this.seconds.toString().length > 1
+        ? this.seconds
+        : "0" + this.seconds;
+    }
   },
-
-  props: ["startTime", "duration"],
-
-  methods: {},
 
   watch: {
     startTime() {
@@ -36,16 +34,6 @@ export default {
 
       var initialTime = endTime - now;
 
-      console.log(
-        "now " +
-          now +
-          ", start" +
-          this.startTime +
-          ", end " +
-          endTime +
-          ", diff" +
-          initialTime
-      );
       timer.start({ countdown: true, startValues: { seconds: initialTime } });
       timer.addEventListener("secondsUpdated", () => {
         self.timeRemaining = timer.getTimeValues().toString();
