@@ -18,7 +18,6 @@ export default {
 
   computed: {
       paddedSeconds: function() {
-          console.log(this.seconds.length)
           return this.seconds.toString().length > 1 ? this.seconds : "0" + this.seconds
       }
   },
