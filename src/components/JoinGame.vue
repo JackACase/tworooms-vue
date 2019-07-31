@@ -35,6 +35,9 @@ export default {
   },
   methods: {
     joinGame() {
+      if(localStorage.getItem("moderator")) {
+        localStorage.removeItem("moderator")
+      }
       let self = this;
       axios
         .post("http://localhost:8000/join/", {
