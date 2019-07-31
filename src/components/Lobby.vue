@@ -14,7 +14,8 @@ import axios from "axios";
 export default {
   data() {
     return {
-      players: ["bob", "joe", "steve"]
+      players: ["bob", "joe", "steve"],
+      interval: null
     };
   },
   props: ["accessCode"],
@@ -24,9 +25,8 @@ export default {
       }
   },
   created() {
-    var interval;
     let self = this;
-    interval = setInterval(() => {
+    this.interval = setInterval(() => {
       // TODO real URLs
       axios
         .get(
@@ -38,11 +38,15 @@ export default {
           self.players = response.data.players;
           if (response.data.state == "pickingLeader" || response.data.state == "roundStarted") {
             //game has started -> go to game component
-            clearInterval(interval);
+            clearInterval(self.interval);
             this.$router.push("/game/" + self.accessCode);
           }
         });
     }, 500);
+  },
+
+  beforeDestroy() {
+    clearInterval(this.interval)
   }
 };
 </script>
