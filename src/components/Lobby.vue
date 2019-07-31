@@ -44,6 +44,7 @@ export default {
           if (response.data.state == "pickingLeader" || response.data.state == "roundStarted") {
             //game has started -> go to game component
             clearInterval(self.interval);
+            localStorage.removeItem('moderator') // no longer needed once game is started
             this.$router.push("/game/" + self.accessCode);
           }
         });
