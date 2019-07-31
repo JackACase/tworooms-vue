@@ -9,7 +9,7 @@
           class="form-control"
           id="playerName"
           placeholder="John Smith"
-        >
+        />
       </div>
       <button @click="createGame" type="button" class="btn btn-primary">Create Game</button>
     </form>
@@ -18,24 +18,25 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
-  data () {
+  data() {
     return {
-      name: '',
-      accessCode: ''
-    }
+      name: "",
+      accessCode: ""
+    };
   },
   methods: {
-    createGame () {
-      let self = this
+    createGame() {
+      Storage.setItem("moderator", "true");
+      let self = this;
       axios
-        .post('http://localhost:8000/game/', { player_name: this.name })
-        .then((response) => {
-          self.accessCode = response.data.access_code
-          self.$router.push('/lobby/' + self.accessCode)
-        })
+        .post("http://localhost:8000/game/", { player_name: this.name })
+        .then(response => {
+          self.accessCode = response.data.access_code;
+          self.$router.push("/lobby/" + self.accessCode);
+        });
     }
   }
-}
+};
 </script>
