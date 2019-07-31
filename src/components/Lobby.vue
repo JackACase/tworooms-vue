@@ -5,7 +5,7 @@
       <li v-for="player in players">{{player}}</li>
     </ul>
 
-    <button @click="startGame" type="button" class="btn btn-primary">Start!</button>
+    <button @click="startGame" type="button" class="btn btn-primary" v-if="isModerator">Start!</button>
   </div>
 </template>
 
@@ -23,6 +23,11 @@ export default {
       startGame() {
           axios.post('http://localhost:8000/start/', {access_code: this.accessCode, state: "pickingLeader"})
       }
+  },
+  computed: {
+    isModerator() {
+      return (localStorage.getItem('moderator') == 'true')
+    }
   },
   created() {
     let self = this;

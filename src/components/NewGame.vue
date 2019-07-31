@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     createGame() {
-      Storage.setItem("moderator", "true");
+      localStorage.setItem("moderator", "true");
       let self = this;
       axios
         .post("http://localhost:8000/game/", { player_name: this.name })
