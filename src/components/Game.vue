@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>{{message}}</h1>
     <Timer
       v-bind:start-time="startTime"
       v-bind:duration="remainingRounds + 1"
@@ -7,7 +8,6 @@
       v-on:time-up="message = 'Time up!'"
     ></Timer>
     <button @click="startRound" type="button" class="btn btn-primary">Ready!</button>
-    <h1>{{message}}</h1>
   </div>
 </template>
 
@@ -43,19 +43,23 @@ export default {
   methods: {
     startRound() {
       var self = this;
+      var responseData
       axios
         .post("http://localhost:8000/start/", {
           access_code: this.accessCode.toUpperCase(),
           state: "roundStarted"
         })
         .then(response => {
+          responseData = response.data
           self.startTime = response.data.start_time;
-        });
+          self.message = "Round " + responseData.currentRound + " in progress"
+        })
     }
   },
 
   created() {
     var self = this;
+    this.message = "Select a leader!"
     this.interval = setInterval(() => {
       axios.get(
         "http://localhost:8000/game?access_code=" +
