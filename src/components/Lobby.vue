@@ -25,8 +25,9 @@ export default {
       }
   },
   computed: {
+    // only the player who created the game may start the game
     isModerator() {
-      return (localStorage.getItem('moderator') == 'true')
+      return (localStorage.getItem('moderator'))
     }
   },
   created() {
@@ -39,7 +40,6 @@ export default {
             self.accessCode.toUpperCase()
         )
         .then(response => {
-          console.log(response.data);
           self.players = response.data.players;
           if (response.data.state == "pickingLeader" || response.data.state == "roundStarted") {
             //game has started -> go to game component
