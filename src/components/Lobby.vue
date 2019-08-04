@@ -36,7 +36,7 @@ export default {
       // TODO real URLs
       axios
         .get(
-          "http://localhost:8000/game?access_code=" +
+          "http://localhost:8000/game/?access_code=" +
             self.accessCode.toUpperCase()
         )
         .then(response => {
