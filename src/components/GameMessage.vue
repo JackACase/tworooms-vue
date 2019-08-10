@@ -21,6 +21,9 @@ export default {
                 case "pickingLeader":
                     message = "select a room leader"
                     break
+                case "betweenRounds":
+                    message = "prepare for next round"
+                    break
                 default:
                     message = "default"
             }

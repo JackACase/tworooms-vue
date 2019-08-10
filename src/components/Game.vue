@@ -5,7 +5,7 @@
             v-bind:start-time="startTime"
             v-bind:duration="remainingRounds + 1"
             v-bind:running="timerRunning"
-            v-on:time-up="message = 'Time up!'"
+            v-on:time-up="roundEnd"
         ></Timer>
         <button
             @click="startRound"
@@ -60,6 +60,12 @@ export default {
                     self.startTime = response.data.start_time;
                     self.gameState = responseData.state;
                 });
+        },
+
+        roundEnd() {
+            this.gameState = "betweenRounds"
+            this.remainingRounds --
+            this.currentRound ++
         }
     },
 
