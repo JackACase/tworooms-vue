@@ -21,7 +21,7 @@ export default {
   props: ["accessCode"],
   methods: {
       startGame() {
-          axios.post('http://localhost:8000/start/', {access_code: this.accessCode, state: "pickingLeader"})
+          axios.post('http://localhost:8000/gamestate/', {access_code: this.accessCode, state: "pickingLeader"})
       }
   },
   computed: {
@@ -44,7 +44,6 @@ export default {
           if (response.data.state == "pickingLeader" || response.data.state == "roundStarted") {
             //game has started -> go to game component
             clearInterval(self.interval);
-            localStorage.removeItem('moderator') // no longer needed once game is started
             this.$router.push("/game/" + self.accessCode);
           }
         });

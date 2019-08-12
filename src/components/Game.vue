@@ -51,9 +51,10 @@ export default {
             var self = this;
             var responseData;
             axios
-                .post("http://localhost:8000/start/", {
+                .post("http://localhost:8000/gamestate/", {
                     access_code: this.accessCode.toUpperCase(),
-                    state: "roundStarted"
+                    state: "roundStarted",
+                    start_time: Math.floor(Date.now() / 1000)
                 })
                 .then(response => {
                     responseData = response.data;
@@ -63,9 +64,38 @@ export default {
         },
 
         roundEnd() {
+            this.remainingRounds--
+            this.currentRound++
             this.gameState = "betweenRounds"
-            this.remainingRounds --
-            this.currentRound ++
+            var self = this
+            axios.post("http://localhost:8000/gamestate/", {
+                access_code: this.accessCode.toUpperCase(),
+                state: self.gameState,
+                current_round: self.currentRound
+            })
+
+            this.waitForRoundStart()
+        },
+
+        waitForRoundStart() {
+            if (!localStorage.moderator) {
+                var self = this
+                this.interval = setInterval(() => {
+                    axios
+                        .get(
+                            "http://localhost:8000/game?access_code=" +
+                            self.accessCode.toUpperCase()
+                        )
+                        .then(response => {
+                            if (response.data.state == "roundStarted") {
+                                this.timerRunning = true;
+                                self.startTime = response.data.start_time;
+                                clearInterval(self.interval);
+                                self.gameState == response.data.state;
+                            }
+                        })
+                })
+            }
         }
     },
 
