@@ -12,6 +12,7 @@
             type="button"
             class="btn btn-primary"
         >Ready!</button>
+        <button v-on:click="endRoundEarly" type="button" class="btn btn-primary">debug</button>
     </div>
 </template>
 
@@ -48,6 +49,7 @@ export default {
 
     methods: {
         startRound() {
+            this.timerRunning = true
             var self = this;
             var responseData;
             axios
@@ -96,6 +98,11 @@ export default {
                         })
                 })
             }
+        },
+
+        endRoundEarly() {
+            this.timerRunning = false
+            this.roundEnd()
         }
     },
 
