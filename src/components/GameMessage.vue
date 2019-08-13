@@ -24,6 +24,9 @@ export default {
                 case "betweenRounds":
                     message = "prepare for next round"
                     break
+                case "gameOver":
+                    message = "game over"
+                    break
                 default:
                     message = "default"
             }

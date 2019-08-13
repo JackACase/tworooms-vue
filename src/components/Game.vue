@@ -12,7 +12,11 @@
             type="button"
             class="btn btn-primary"
         >Ready!</button>
-        <button v-on:click="endRoundEarly" type="button" class="btn btn-primary">debug</button>
+        <button
+            v-on:click="endRoundEarly"
+            type="button"
+            class="btn btn-danger"
+        >debug</button>
     </div>
 </template>
 
@@ -68,15 +72,31 @@ export default {
         roundEnd() {
             this.remainingRounds--
             this.currentRound++
-            this.gameState = "betweenRounds"
+            if (this.remainingRounds >= 0) {
+                this.gameState = "betweenRounds"
+                var self = this
+                axios.post("http://localhost:8000/gamestate/", {
+                    access_code: this.accessCode.toUpperCase(),
+                    state: self.gameState,
+                    current_round: self.currentRound
+                })
+
+                this.waitForRoundStart()
+            }
+
+            else {
+                this.gameEnd()
+            }
+        },
+
+        gameEnd() {
+            // change to a new game button rather than the round start button
+            this.gameState = "gameOver"
             var self = this
             axios.post("http://localhost:8000/gamestate/", {
                 access_code: this.accessCode.toUpperCase(),
-                state: self.gameState,
-                current_round: self.currentRound
+                state: self.gameState
             })
-
-            this.waitForRoundStart()
         },
 
         waitForRoundStart() {

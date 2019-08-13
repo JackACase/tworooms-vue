@@ -57,6 +57,8 @@ export default {
         running() {
             if(!this.running) {
                 this.timer.stop()
+                this.minutes = 0
+                this.seconds = 0
             }
         }
     }
