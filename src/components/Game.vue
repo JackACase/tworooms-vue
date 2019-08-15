@@ -127,6 +127,7 @@ export default {
     },
 
     created() {
+        //TODO add get request for player object by access code and player name
         var self = this;
         this.gameState = "pickingLeader";
         this.interval = setInterval(() => {
