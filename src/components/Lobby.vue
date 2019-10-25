@@ -21,6 +21,8 @@ export default {
   props: ["accessCode"],
   methods: {
       startGame() {
+          //this will cause the app to transisition to the game screen for all players, and will trigger shuffling
+          //on the backend. 
           axios.post('http://localhost:8000/gamestate/', {access_code: this.accessCode, state: "pickingLeader"})
       }
   },
