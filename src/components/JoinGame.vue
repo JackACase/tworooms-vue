@@ -46,6 +46,12 @@ export default {
         })
         .then(response => {
           self.$router.push("/lobby/" + self.accessCode);
+
+          let game = response.data.game
+          let player = response.data.player
+
+          localStorage.setItem("accessCode", game.access_code)
+          localStorage.setItem("playerID", player.id)
         });
     }
   }
