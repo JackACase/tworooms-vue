@@ -29,12 +29,17 @@ export default {
   methods: {
     createGame() {
       localStorage.setItem("moderator", "true");
-      let self = this;
+      let self = this
       axios
         .post("http://localhost:8000/game/", { player_name: this.name })
         .then(response => {
-          self.accessCode = response.data.game.access_code;
-          self.$router.push("/lobby/" + self.accessCode);
+          let game = response.data.game
+          let player = response.data.player
+          self.accessCode = game.access_code
+          self.$router.push("/lobby/" + self.accessCode)
+
+          localStorage.setItem("accessCode", game.access_code)
+          localStorage.setItem("playerID", player.id)
         });
     }
   }
