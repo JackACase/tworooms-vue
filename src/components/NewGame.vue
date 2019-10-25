@@ -33,7 +33,7 @@ export default {
       axios
         .post("http://localhost:8000/game/", { player_name: this.name })
         .then(response => {
-          self.accessCode = response.data.access_code;
+          self.accessCode = response.data.game.access_code;
           self.$router.push("/lobby/" + self.accessCode);
         });
     }
