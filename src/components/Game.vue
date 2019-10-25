@@ -41,7 +41,8 @@ export default {
             currentRound: 1,
             remainingRounds: 2,
             timerRunning: false,
-            gameState: ""
+            gameState: "",
+            player: {}
         };
     },
 
@@ -130,6 +131,13 @@ export default {
         //TODO add get request for player object by access code and player name
         var self = this;
         this.gameState = "pickingLeader";
+        let id = localStorage.getItem("playerID")
+        
+        //get the player's object which should now contain a shuffled card index
+        axios.get("http://localhost:8000/player?player_id=" + id).then(response => {
+            self.player = response.data
+        })
+
         this.interval = setInterval(() => {
             axios
                 .get(
