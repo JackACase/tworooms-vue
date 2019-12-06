@@ -1,17 +1,11 @@
 import axios from "axios";
 
-var API_BASE = "http://localhost:8000/"
+var API_BASE = "https://8000-ed3b72c1-001b-4b78-8432-da680fe8be33.ws-us02.gitpod.io/"
 
 export function create_game(playername) {
-  axios.post(API_BASE + "game/", { player_name: playername }).then(
-    response => {
-      return {
-        game: response.data.game,
-        player: response.data.player,
-        accessCode: response.data.game.access_code
-      }
-    }
-  )
+  let game = {}
+  console.log(API_BASE + "game/")
+  return axios.post(API_BASE + "game/", { player_name: playername })
 }
 
 export function join_game(playername, accesscode) {

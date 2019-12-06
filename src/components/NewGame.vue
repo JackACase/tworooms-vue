@@ -22,34 +22,19 @@ import {create_game} from "../api_access"
 export default {
   data() {
     return {
-      name: "",
-      accessCode: ""
+      name: ""
     };
   },
   methods: {
     createGame() {
+      let router = this.$router
       localStorage.setItem("moderator", "true");
-      let game = create_game(this.name)
-
-      this.accessCode = game.accessCode
-
-      localStorage.setItem("accessCode", game.accessCode)
-      localStorage.setItem("playerID", game.player.id)
-
-      self.$router.push("/lobby/" + this.accessCode)
-
-
-      // axios
-      //   .post("http://localhost:8000/game/", { player_name: this.name })
-      //   .then(response => {
-      //     let game = response.data.game
-      //     let player = response.data.player
-      //     self.accessCode = game.access_code
-      //     self.$router.push("/lobby/" + self.accessCode)
-
-      //     localStorage.setItem("accessCode", game.access_code)
-      //     localStorage.setItem("playerID", player.id)
-      //   });
+      create_game(this.name).then(response => {
+        let accessCode = response.data.game.access_code
+        localStorage.setItem("accessCode", response.data.game.access_code)
+        localStorage.setItem("playerID", response.data.player.id)
+        router.push("/lobby/" + accessCode)
+      })
     }
   }
 };
