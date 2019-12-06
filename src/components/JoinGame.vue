@@ -19,13 +19,13 @@
           placeholder="123ABC"
         />
       </div>
-      <button @click="joinGame" type="button" class="btn btn-primary">Join Game</button>
+      <button @click="join" type="button" class="btn btn-primary">Join Game</button>
     </form>
   </div>
 </template>
 
 <script>
-import {join_game} from "../api_access"
+import {joinGame} from "../api_access"
 export default {
   data() {
     return {
@@ -34,14 +34,14 @@ export default {
     };
   },
   methods: {
-    joinGame() {
+    join() {
       if(localStorage.getItem("moderator")) {
         localStorage.removeItem("moderator")
       }
 
       let router = this.$router
 
-      join_game(this.name, this.accessCode).then(response => {
+      joinGame(this.name, this.accessCode).then(response => {
         let accessCode = response.data.game.access_code
 
         localStorage.setItem("accessCode", accessCode)
