@@ -39,12 +39,16 @@ export default {
         localStorage.removeItem("moderator")
       }
 
-      let game = join_game(this.name, this.accessCode)
+      let router = this.$router
 
-      localStorage.setItem("accessCode", game.game.access_code)
-      localStorage.setItem("playerID", game.player.id)
+      join_game(this.name, this.accessCode).then(response => {
+        let accessCode = response.data.game.access_code
 
-      let self = this;
+        localStorage.setItem("accessCode", accessCode)
+        localStorage.setItem("playerID", response.player.id)
+
+        router.push("/lobby/" + accessCode)
+      })
     }
   }
 };
