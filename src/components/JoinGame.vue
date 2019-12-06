@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import {join_game} from "../api_access"
 export default {
   data() {
     return {
@@ -38,21 +38,13 @@ export default {
       if(localStorage.getItem("moderator")) {
         localStorage.removeItem("moderator")
       }
+
+      let game = join_game(this.name, this.accessCode)
+
+      localStorage.setItem("accessCode", game.game.access_code)
+      localStorage.setItem("playerID", game.player.id)
+
       let self = this;
-      axios
-        .post("http://localhost:8000/join/", {
-          player_name: this.name,
-          access_code: this.accessCode.toUpperCase()
-        })
-        .then(response => {
-          self.$router.push("/lobby/" + self.accessCode);
-
-          let game = response.data.game
-          let player = response.data.player
-
-          localStorage.setItem("accessCode", game.access_code)
-          localStorage.setItem("playerID", player.id)
-        });
     }
   }
 };
