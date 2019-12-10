@@ -31,6 +31,13 @@ export function getGame(accessCode) {
   })
 }
 
+export function updateGameState(state, accessCode) {
+  return axios.post(API_BASE + "gamestate/", {
+    access_code: accessCode.toUpperCase(),
+    state: state
+  })
+}
+
 /*
  * Retrieves a player object by playerID
  */

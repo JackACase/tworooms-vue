@@ -13,7 +13,6 @@
       </div>
       <button @click="newGame" type="button" class="btn btn-primary">Create Game</button>
     </form>
-    <h1 v-if="accessCode">{{accessCode}}</h1>
   </div>
 </template>
 

@@ -22,7 +22,7 @@
 
 <script>
 import axios from "axios";
-import {getGame, getPlayer} from "../api_access"
+import {getGame, getPlayer, updateGameState} from "../api_access"
 import Timer from "./Timer.vue";
 import GameMessage from "./GameMessage.vue";
 
@@ -58,12 +58,8 @@ export default {
             this.timerRunning = true
             var self = this;
             var responseData;
-            axios
-                .post("http://localhost:8000/gamestate/", {
-                    access_code: this.accessCode.toUpperCase(),
-                    state: "roundStarted",
-                    start_time: Math.floor(Date.now() / 1000)
-                })
+            this.gameState = "roundStarted"
+            updateGameState("roundStarted", this.accessCode)
                 .then(response => {
                     responseData = response.data;
                     self.startTime = response.data.start_time;
@@ -75,14 +71,8 @@ export default {
             this.remainingRounds--
             this.currentRound++
             if (this.remainingRounds >= 0) {
+              updateGameState("betweenRounds", this.accessCode)
                 this.gameState = "betweenRounds"
-                var self = this
-                axios.post("http://localhost:8000/gamestate/", {
-                    access_code: this.accessCode.toUpperCase(),
-                    state: self.gameState,
-                    current_round: self.currentRound
-                })
-
                 this.waitForRoundStart()
             }
 
@@ -94,11 +84,7 @@ export default {
         gameEnd() {
             // change to a new game button rather than the round start button
             this.gameState = "gameOver"
-            var self = this
-            axios.post("http://localhost:8000/gamestate/", {
-                access_code: this.accessCode.toUpperCase(),
-                state: self.gameState
-            })
+            updateGameState(this.gameState, this.accessCode)
         },
 
         waitForRoundStart() {
@@ -136,8 +122,7 @@ export default {
         })
 
         this.interval = setInterval(() => {
-            axios
-              .getGame(self.accessCode.toUpperCase())
+          getGame(self.accessCode.toUpperCase())
                 .then(response => {
                     if (response.data.state == "roundStarted") {
                         this.timerRunning = true;
