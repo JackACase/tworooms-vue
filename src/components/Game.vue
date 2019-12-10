@@ -22,6 +22,7 @@
 
 <script>
 import axios from "axios";
+import {getGame, getPlayer} from "../api_access"
 import Timer from "./Timer.vue";
 import GameMessage from "./GameMessage.vue";
 
@@ -104,11 +105,7 @@ export default {
             if (!localStorage.moderator) {
                 var self = this
                 this.interval = setInterval(() => {
-                    axios
-                        .get(
-                            "http://localhost:8000/game?access_code=" +
-                            self.accessCode.toUpperCase()
-                        )
+                    getGame(self.accessCode.toUpperCase())
                         .then(response => {
                             if (response.data.state == "roundStarted") {
                                 this.timerRunning = true;
@@ -132,18 +129,15 @@ export default {
         var self = this;
         this.gameState = "pickingLeader";
         let id = localStorage.getItem("playerID")
-        
+
         //get the player's object which should now contain a shuffled card index
-        axios.get("http://localhost:8000/player?player_id=" + id).then(response => {
+        getPlayer(id).then(response => {
             self.player = response.data
         })
 
         this.interval = setInterval(() => {
             axios
-                .get(
-                    "http://localhost:8000/game?access_code=" +
-                    self.accessCode.toUpperCase()
-                )
+              .getGame(self.accessCode.toUpperCase())
                 .then(response => {
                     if (response.data.state == "roundStarted") {
                         this.timerRunning = true;
