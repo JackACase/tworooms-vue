@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import {getGame, getPlayer, updateGameState} from "../api_access"
 import Timer from "./Timer.vue";
 import GameMessage from "./GameMessage.vue";
