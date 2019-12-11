@@ -10,50 +10,45 @@
 </template>
 
 <script>
-import axios from "axios";
+import {updateGameState} from "../api_access"
 export default {
-  data() {
-    return {
-      players: ["bob", "joe", "steve"],
-      interval: null
-    };
-  },
-  props: ["accessCode"],
-  methods: {
-      startGame() {
+    data() {
+        return {
+            players: ["bob", "joe", "steve"],
+            interval: null
+        };
+    },
+    props: ["accessCode"],
+    methods: {
+        startGame() {
           //this will cause the app to transisition to the game screen for all players, and will trigger shuffling
-          //on the backend. 
-          axios.post('http://localhost:8000/gamestate/', {access_code: this.accessCode, state: "pickingLeader"})
-      }
-  },
-  computed: {
+          //on the backend.
+            updateGameState("pickingLeader", this.accessCode)
+        }
+    },
+    computed: {
     // only the player who created the game may start the game
-    isModerator() {
-      return (localStorage.getItem('moderator'))
-    }
-  },
-  created() {
-    let self = this;
-    this.interval = setInterval(() => {
-      // TODO real URLs
-      axios
-        .get(
-          "http://localhost:8000/game/?access_code=" +
-            self.accessCode.toUpperCase()
-        )
-        .then(response => {
-          self.players = response.data.players;
-          if (response.data.state == "pickingLeader" || response.data.state == "roundStarted") {
-            //game has started -> go to game component
-            clearInterval(self.interval);
-            this.$router.push("/game/" + self.accessCode);
-          }
+        isModerator() {
+            return (localStorage.getItem('moderator'))
+        }
+    },
+    created() {
+        let self = this;
+        this.interval = setInterval(() => {
+        // TODO real URLs
+        getGame(this.accessCode).then(response => {
+            self.players = response.data.players;
+            if (response.data.state == "pickingLeader" || response.data.state == "roundStarted") {
+                //game has started -> go to game component
+                clearInterval(self.interval);
+                this.$router.push("/game/" + self.accessCode);
+            }
         });
-    }, 500);
-  },
+        }, 500);
+    },
 
-  beforeDestroy() {
-    clearInterval(this.interval)
-  }
+    beforeDestroy() {
+        clearInterval(this.interval)
+    }
 };
 </script>
