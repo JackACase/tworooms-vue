@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {updateGameState} from "../api_access"
+import {updateGameState, getGame} from "../api_access"
 export default {
     data() {
         return {
