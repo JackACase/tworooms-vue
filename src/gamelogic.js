@@ -27,4 +27,18 @@ function roundHostages(playerCount, currentRound) {
     return hostages[currentRound]
 }
 
+/*
+ * take a playset and playercount and return an array
+ * representing every card in the deck
+ */
+export function buildDeck(playerCount, playsetName) {
+    let cardConfig = require('./assets/cards.json')
+    let playset = cardConfig.playsets.find(set => set.name == playsetName)
+    let deck = []
+    playset.core.foreach(cardName =>
+        deck.push(cardConfig.cards.find(card => card.name == cardName)))
+
+
+}
+
 export { longGameAvailable, roundHostages }
