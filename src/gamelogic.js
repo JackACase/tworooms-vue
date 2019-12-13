@@ -35,10 +35,24 @@ export function buildDeck(playerCount, playsetName) {
     let cardConfig = require('./assets/cards.json')
     let playset = cardConfig.playsets.find(set => set.name == playsetName)
     let deck = []
+
+    //put the core cards from the set into the deck
+    //TODO if there are fewer players than core cards don't
     playset.core.foreach(cardName =>
         deck.push(cardConfig.cards.find(card => card.name == cardName)))
 
-
+    //if there are an odd number of players, put the extra card in the deck
+    if(playerCount % 2 != 0) {
+        let extraCard = cardConfig.cards.find(card => card.name == playset.extra)
+        deck.push(extraCard)
+    }
+    //fill the rest of the player count with red and blue team (equal number)
+    let redTeam = cardConfig.cards.find(card => card.name == 'red team')
+    let blueTeam = cardConfig.cards.find(card => card.name == 'blue team')
+    for(let i = deck.length; i < playerCount; i += 2) {
+        deck.push(redTeam)
+        deck.push(blueTeam)
+    }
 }
 
 export { longGameAvailable, roundHostages }
