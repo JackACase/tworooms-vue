@@ -31,14 +31,14 @@ function roundHostages(playerCount, currentRound) {
  * take a playset and playercount and return an array
  * representing every card in the deck
  */
-export function buildDeck(playerCount, playsetName) {
+function buildDeck(playerCount, playsetName) {
     let cardConfig = require('./assets/cards.json')
     let playset = cardConfig.playsets.find(set => set.name == playsetName)
     let deck = []
 
     //put the core cards from the set into the deck
     //TODO if there are fewer players than core cards don't
-    playset.core.foreach(cardName =>
+    playset.core.forEach(cardName =>
         deck.push(cardConfig.cards.find(card => card.name == cardName)))
 
     //if there are an odd number of players, put the extra card in the deck
@@ -53,6 +53,15 @@ export function buildDeck(playerCount, playsetName) {
         deck.push(redTeam)
         deck.push(blueTeam)
     }
+
+    return deck
 }
 
-export { longGameAvailable, roundHostages }
+// export { longGameAvailable, roundHostages }
+
+
+// Export node module.
+if ( typeof module !== 'undefined' && module.hasOwnProperty('exports') )
+{
+    module.exports = buildDeck;
+}
