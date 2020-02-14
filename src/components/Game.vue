@@ -24,7 +24,7 @@
 import {getGame, getPlayer, updateGameState} from "../api_access"
 import Timer from "./Timer.vue";
 import GameMessage from "./GameMessage.vue";
-import {buildDeck} from "../gamelogic"
+// import {buildDeck} from "../gamelogic"
 
 export default {
     interval: null,
