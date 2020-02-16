@@ -14,8 +14,8 @@ export default {
 
     data() {
         return {
-            color = "red",
-            name = "red team"
+            color: "red",
+            name: "red team"
         }
     }
 }
