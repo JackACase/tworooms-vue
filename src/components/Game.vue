@@ -1,5 +1,6 @@
 <template>
     <div>
+        <GameCard v-bind:card="player.card"></GameCard>
         <GameMessage v-bind:game-state="gameState"></GameMessage>
         <Timer
             v-bind:start-time="startTime"
@@ -17,13 +18,16 @@
             type="button"
             class="btn btn-danger"
         >debug</button>
+        <button>color reveal</button>
+        <button>card reveal</button>
     </div>
 </template>
 
 <script>
 import {getGame, getPlayer, updateGameState} from "../api_access"
-import Timer from "./Timer.vue";
-import GameMessage from "./GameMessage.vue";
+import Timer from "./Timer.vue"
+import GameMessage from "./GameMessage.vue"
+import GameCard from "./GameCard.vue"
 // import {buildDeck} from "../gamelogic"
 
 export default {
@@ -33,7 +37,8 @@ export default {
 
     components: {
         Timer,
-        GameMessage
+        GameMessage,
+        GameCard
     },
 
     data() {
