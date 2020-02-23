@@ -1,10 +1,12 @@
 <template>
-    <div class="card">
-        <div v-if="visibility == 'full'" v-bind:class="card.color + 'card'">
-            <img v-bind:src="card.image" class="card-img-top">
-            <div class="card-body">
-                <h1>{{card.name}}</h1>
-                <p class="text-justify">{{card.description}}</p>
+    <div class="card" v-bind:class="visibility != 'none' ? card.color + 'card' : ''">
+        <div v-if="visibility != 'none'">
+            <div v-if="visibility == 'full'">
+                <img v-bind:src="card.image" class="card-img-top">
+                <div class="card-body">
+                    <h1>{{card.name}}</h1>
+                    <p class="text-justify">{{card.description}}</p>
+                </div>
             </div>
         </div>
         <div v-else>
@@ -38,5 +40,8 @@ div.bluecard {
 }
 p, h1 {
     color: white;
+}
+div.card {
+    min-height: 500px;
 }
 </style>
