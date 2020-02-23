@@ -1,9 +1,14 @@
 <template>
-    <div v-bind:class="card.color + 'card'">
-        <div v-if="visibility == 'full'" >
-            <h1>{{card.name}}</h1>
-            <img v-bind:src="card.image" alt="no image">
-            <p>{{card.description}}</p>
+    <div class="card">
+        <div v-if="visibility == 'full'" v-bind:class="card.color + 'card'">
+            <img v-bind:src="card.image" class="card-img-top">
+            <div class="card-body">
+                <h1>{{card.name}}</h1>
+                <p class="text-justify">{{card.description}}</p>
+            </div>
+        </div>
+        <div v-else>
+            <h1>cardback</h1>
         </div>
     </div>
 </template>
