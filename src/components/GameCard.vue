@@ -1,16 +1,11 @@
 <template>
-    <div class="card" v-bind:class="visibility != 'none' ? card.color + 'card' : ''">
-        <div v-if="visibility != 'none'">
-            <div v-if="visibility == 'full'">
-                <img v-bind:src="card.image" class="card-img-top">
-                <div class="card-body">
-                    <h1>{{card.name}}</h1>
-                    <p class="text-justify">{{card.description}}</p>
-                </div>
+    <div id="game-card" v-bind:class="visibility != 'none' ? card.color + 'card' : 'cardback'">
+        <div id="game-card-content" v-if="visibility == 'full'">
+            <img id="game-card-image" v-bind:src="card.image">
+            <div id="game-card-text">
+                <h1 id="game-card-name">{{card.name}}</h1>
+                <p id="game-card-description">{{card.description}}</p>
             </div>
-        </div>
-        <div v-else>
-            <h1>cardback</h1>
         </div>
     </div>
 </template>
@@ -32,16 +27,62 @@ export default {
 </script>
 
 <style scoped>
-div.redcard {
-    background-color: red;
+p,
+h1 {
+  color: white;
 }
-div.bluecard {
-    background-color: blue;
+
+#game-card {
+  border: solid black;
+  border-radius: 10px;
+  width: 400px;
+	height: 75vh;
 }
-p, h1 {
-    color: white;
+
+#game-card-content {
+  height: 100%;
 }
-div.card {
-    min-height: 500px;
+
+#game-card-image {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  width: 100%;
+  height: 50%;
+}
+
+#game-card-text {
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+}
+
+#game-card-name {
+  box-sizing: border-box;
+  text-align: center;
+	flex: 1;
+	margin: 0;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+#game-card-description {
+  box-sizing: border-box;
+  text-align: justify;
+  overflow: scroll;
+  margin: 0;
+  padding-bottom: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	flex: 4;
+}
+
+.redcard {
+	background-color: #6e2a2a;
+}
+.bluecard {
+	background-color: #4f65c9;
+}
+.cardback {
+	background-color: white;
 }
 </style>
