@@ -60,19 +60,17 @@ h1 {
   box-sizing: border-box;
   text-align: center;
 	flex: 1;
-	padding-top: .1em;
-	padding-bottom: .1em;
+	margin-bottom: .1em;
 }
 
 #game-card-description {
   box-sizing: border-box;
   text-align: justify;
   overflow: scroll;
-  margin: 0;
-  padding-bottom: 1em;
-	padding-left: 1em;
-	padding-right: 1em;
-	flex: 4;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-bottom: .5em;
+  flex: 4;
 }
 
 .redcard {
