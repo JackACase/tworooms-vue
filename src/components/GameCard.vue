@@ -35,8 +35,8 @@ h1 {
 #game-card {
   border: solid black;
   border-radius: 10px;
-  width: 400px;
-	height: 75vh;
+  width: 100%;
+  height: 60vh;
 }
 
 #game-card-content {
@@ -60,9 +60,8 @@ h1 {
   box-sizing: border-box;
   text-align: center;
 	flex: 1;
-	margin: 0;
-	padding-top: 1em;
-	padding-bottom: 1em;
+	padding-top: .1em;
+	padding-bottom: .1em;
 }
 
 #game-card-description {
